@@ -1,9 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID);
-console.log("GOOGLE_CLIENT_SECRET:", process.env.GOOGLE_CLIENT_SECRET);
-console.log("GOOGLE_REDIRECT_URI:", process.env.GOOGLE_REDIRECT_URI);
 
 const authRoutes = require("./routes/authRoutes");
 const calendarRoutes = require("./routes/calendarRoutes");
@@ -12,7 +9,14 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin:
+      process.env.NODE_ENV === "production"
+        ? "https://calendar-events.arrmankhan.me"
+        : "http://localhost:5173",
+  })
+);
 app.use(express.json());
 
 // Routes

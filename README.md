@@ -149,9 +149,9 @@ npm run dev
 
 ## Screenshots
 
-![App Screenshot1](https://ibb.co/NNVZps1)
-![App Screenshot2](https://ibb.co/YPG6Xfy)
-![App Screenshot3](https://ibb.co/Wn3bHmY)
+![App Screenshot1](https://i.ibb.co/dpWG6rb/Screenshot-2025-01-21-180740.png)
+![App Screenshot2](https://i.ibb.co/WG1Q0BP/Screenshot-2025-01-21-181016.png)
+![App Screenshot3](https://i.ibb.co/mJBLRfM/Screenshot-2025-01-21-181114.png)
 
 ## Authors
 
