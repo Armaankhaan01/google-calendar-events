@@ -3,8 +3,10 @@ import {
   DeleteOutlined,
   PlusOutlined,
   ReloadOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import PropTypes from "prop-types";
+import { useMediaQuery } from "react-responsive";
 
 const TableActions = ({
   handleDelete,
@@ -13,26 +15,44 @@ const TableActions = ({
   selectedRowKeys,
   logout,
   loading,
-}) => (
-  <Space>
-    <Button
-      type="primary"
-      icon={<PlusOutlined />}
-      onClick={() => setIsModalOpen(true)}
+}) => {
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+
+  return (
+    <Space
+      size={isMobile ? 12 : "middle"}
+      className="w-full justify-between md:justify-end"
     >
-      Create Event
-    </Button>
-    <Button danger onClick={handleDelete} disabled={!selectedRowKeys.length}>
-      <DeleteOutlined />
-    </Button>
-    <Button type="primary" onClick={handleRefresh} loading={loading}>
-      <ReloadOutlined />
-    </Button>
-    <Button onClick={logout} danger>
-      Sign Out
-    </Button>
-  </Space>
-);
+      <Button
+        type="primary"
+        icon={<PlusOutlined />}
+        onClick={() => setIsModalOpen(true)}
+        title="Create Event"
+      ></Button>
+      <Button
+        danger
+        onClick={handleDelete}
+        disabled={!selectedRowKeys.length}
+        title="Delete selected Events"
+        icon={<DeleteOutlined />}
+      ></Button>
+      <Button
+        type="primary"
+        onClick={handleRefresh}
+        loading={loading}
+        title="Refresh"
+        icon={<ReloadOutlined />}
+      ></Button>
+      <Button
+        onClick={logout}
+        danger
+        variant="solid"
+        title="Logout"
+        icon={<LogoutOutlined />}
+      ></Button>
+    </Space>
+  );
+};
 
 TableActions.propTypes = {
   handleDelete: PropTypes.func.isRequired,

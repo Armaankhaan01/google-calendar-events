@@ -1,14 +1,4 @@
-import {
-  Table,
-  Empty,
-  Button,
-  Row,
-  Col,
-  Modal,
-  Form,
-  message,
-  Space,
-} from "antd";
+import { Table, Empty, Button, Row, Col, Modal, Form, message } from "antd";
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import CreateEventModal from "./CreateEventModal";
@@ -32,7 +22,6 @@ const EventTable = ({ logout, user }) => {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
-
   const fetchEvents = async (page = 1, shouldAppend = true) => {
     try {
       setLoading(true);
@@ -195,20 +184,23 @@ const EventTable = ({ logout, user }) => {
       setLoading(true);
       const accessToken = localStorage.getItem("googleAccessToken");
 
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/calendar/events`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          summary: values.summary,
-          description: values.description,
-          startDateTime: values.dateTime[0].toISOString(),
-          endDateTime: values.dateTime[1].toISOString(),
-          isRecurring: values.isRecurring,
-        }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/calendar/events`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            summary: values.summary,
+            description: values.description,
+            startDateTime: values.dateTime[0].toISOString(),
+            endDateTime: values.dateTime[1].toISOString(),
+            isRecurring: values.isRecurring,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to create event");
@@ -245,12 +237,17 @@ const EventTable = ({ logout, user }) => {
 
           await Promise.all(
             selectedRowKeys.map((eventId) =>
-              fetch(`${import.meta.env.VITE_BACKEND_URL}/calendar/events/${eventId}`, {
-                method: "DELETE",
-                headers: {
-                  Authorization: `Bearer ${accessToken}`,
-                },
-              })
+              fetch(
+                `${
+                  import.meta.env.VITE_BACKEND_URL
+                }/calendar/events/${eventId}`,
+                {
+                  method: "DELETE",
+                  headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                  },
+                }
+              )
             )
           );
 
@@ -280,18 +277,24 @@ const EventTable = ({ logout, user }) => {
         handleCreateEvent={handleCreateEvent}
         loading={loading}
       />
-      <Row justify="space-between" align="middle" className="mb-4">
-        <Col>
-          <h2 className="text-2xl font-semibold">Welcome, {user.name}</h2>
+      <Row gutter={[16, 16]} className="w-full px-4 py-4">
+        <Col xs={24} md={6}>
+          <h2 className="text-2xl font-semibold m-0 text-center">
+            Welcome, {user.name}
+          </h2>
         </Col>
-        <Col>
-          <Space>
+        <Col xs={24} md={11}>
+          <div className="flex justify-center">
             <Filters
               filters={filters}
               filterType={filterType}
               setFilterType={setFilterType}
               handleFilterChange={handleFilterChange}
             />
+          </div>
+        </Col>
+        <Col xs={24} md={7}>
+          <div className="flex justify-end">
             <TableActions
               handleDelete={handleDelete}
               handleRefresh={handleRefresh}
@@ -300,7 +303,7 @@ const EventTable = ({ logout, user }) => {
               logout={logout}
               loading={loading}
             />
-          </Space>
+          </div>
         </Col>
       </Row>
 
@@ -316,6 +319,10 @@ const EventTable = ({ logout, user }) => {
             rowKey="id"
             loading={loading}
             pagination={false}
+            scroll={{
+              y: `calc(100vh - 310px)`,
+              x: 1000,
+            }}
           />
           {nextPageToken && (
             <div style={{ textAlign: "center", marginTop: 16 }}>
