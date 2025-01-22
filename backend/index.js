@@ -1,10 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-
 const authRoutes = require("./routes/authRoutes");
 const calendarRoutes = require("./routes/calendarRoutes");
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -29,8 +27,8 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server
-app.listen(PORT, () => {
+// Start server and store the server instance
+const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
