@@ -23,11 +23,14 @@ const GoogleAuthContent = () => {
     onSuccess: async (codeResponse) => {
       try {
         setLoading(true);
-        const response = await fetch("api/auth/google/callback", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ code: codeResponse.code }),
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/auth/google/callback`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ code: codeResponse.code }),
+          }
+        );
         const data = await response.json();
         setUser(data.user);
         localStorage.setItem("user", JSON.stringify(data.user));

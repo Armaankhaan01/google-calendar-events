@@ -38,7 +38,7 @@ const EventTable = ({ logout, user }) => {
       setLoading(true);
       const accessToken = localStorage.getItem("googleAccessToken");
       const pageToken = shouldAppend ? nextPageToken : null;
-      const baseUrl = `/api/calendar/events`;
+      const baseUrl = `${import.meta.env.VITE_BACKEND_URL}/calendar/events`;
       const queryParams = new URLSearchParams();
 
       if (pageToken) queryParams.append("pageToken", pageToken);
@@ -195,7 +195,7 @@ const EventTable = ({ logout, user }) => {
       setLoading(true);
       const accessToken = localStorage.getItem("googleAccessToken");
 
-      const response = await fetch("api/calendar/events", {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/calendar/events`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -245,7 +245,7 @@ const EventTable = ({ logout, user }) => {
 
           await Promise.all(
             selectedRowKeys.map((eventId) =>
-              fetch(`api/calendar/events/${eventId}`, {
+              fetch(`${import.meta.env.VITE_BACKEND_URL}/calendar/events/${eventId}`, {
                 method: "DELETE",
                 headers: {
                   Authorization: `Bearer ${accessToken}`,
